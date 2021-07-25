@@ -1,8 +1,24 @@
-import { createStore } from "vuex";
+import {
+  createStore
+} from "vuex";
+
+import {
+  getField,
+  updateField
+} from 'vuex-map-fields';
+
+import Item from './module/item';
 
 export default createStore({
   state: {},
-  mutations: {},
+  getters: {
+    getField
+  },
+  mutations: {
+    updateField
+  },
   actions: {},
-  modules: {},
+  modules: {
+    item: Item,
+  },
 });

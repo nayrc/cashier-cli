@@ -1,0 +1,11 @@
+@use './variable';
+
+.main-button {
+    background: variable.$mainColor;
+    border: none;
+    color: variable.$whiteColor;
+    width: 100%;
+    padding: 0.75rem 2rem;
+    border-radius: 1.5rem;
+    box-shadow: 0px 7px 32px 7px variable.$cloudColor;
+}
