@@ -3,18 +3,27 @@
     <div class="card">
       <div class="center">
         <label class="label">
-          <input
-            type="checkbox"
-            v-model="cart"
-            :value="data"
-            class="label__checkbox"
-            @click="checked"
-          />
-          <span class="label__text">
-            <span class="label__check">
-              <i class="fa fa-check icon"></i>
+          <div v-if="configCheckbox == 'on'">
+            <input
+              type="checkbox"
+              v-model="cart"
+              :value="data"
+              class="label__checkbox"
+              @click="checked"
+            />
+            <span class="label__text">
+              <span class="label__check">
+                <i class="fa fa-check icon"></i>
+              </span>
             </span>
-          </span>
+          </div>
+          <div v-else>
+            <span class="label__text">
+              <span class="label__check">
+                <i class="fa fa-check icon"></i>
+              </span>
+            </span>
+          </div>
         </label>
       </div>
       <div class="top d-flex justify-content-center align-items-center">
@@ -31,14 +40,10 @@ import { mapFields } from "vuex-map-fields";
 
 export default {
   name: "Item",
-  props: ["fruits"],
+  props: ["fruits", "configCheckbox"],
 
   computed: {
     ...mapFields("item", ["cart"]),
-  },
-
-  updated() {
-    console.log(this.cart);
   },
 
   methods: {},

@@ -3,6 +3,32 @@
 @use "./utility/class";
 @use "./utility/mixins";
 
+.form-control {
+  line-height: 30px !important;
+}
+
+#nav {
+  position: fixed;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: variable.$whiteColor;
+  width: 100px;
+  box-shadow: 0px 16px 41px -7px variable.$cloudColor;
+
+  .link {
+    color: #000;
+    box-sizing: border-box;
+  }
+
+  .router-link-active {
+    background: variable.$cloudColor;
+    padding: 0.5rem 1.5rem;
+    border-radius: 1rem;
+    font-weight: 700;
+  }
+}
+
 .card {
   border: none;
   border-radius: 2rem;
@@ -51,7 +77,7 @@
     }
   }
 
-  .label__checkbox:checked+.label__text .label__check {
+  .label__checkbox:checked + .label__text .label__check {
     animation: check 0.5s cubic-bezier(0.895, 0.03, 0.685, 0.22) forwards;
 
     .icon {

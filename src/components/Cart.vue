@@ -24,7 +24,7 @@
         <div class="quantity d-flex align-items-center justify-content-end">
           <div
             class="decrease p-3"
-            @click="updateCart(data, data.price, 'minus')"
+            @click="quantityUpdate(data, data.price, 'minus')"
           >
             <i class="ri-subtract-line"></i>
           </div>
@@ -33,7 +33,7 @@
           </div>
           <div
             class="increase p-3"
-            @click="updateCart(data, data.price, 'plus')"
+            @click="quantityUpdate(data, data.price, 'plus')"
           >
             <i class="ri-add-line"></i>
           </div>
@@ -56,7 +56,15 @@
         </div>
         <div class="action">
           <div class="d-flex">
-            <button class="main-button mb-3 mr-5" @click="totalCount">
+            <button
+              class="main-button mb-3 mr-5"
+              @click="totalCount"
+              v-if="subsTotal !== 0"
+              disabled
+            >
+              Total Count
+            </button>
+            <button class="main-button mb-3 mr-5" @click="totalCount" v-else>
               Total Count
             </button>
           </div>
@@ -72,12 +80,21 @@ import { mapFields } from "vuex-map-fields";
 
 export default {
   name: "Cart",
+  data() {
+    return {
+      cartUpdate: [],
+    };
+  },
   computed: {
     ...mapFields("item", ["cart", "subsTotal", "tax", "total", "priceArr"]),
   },
 
   methods: {
     ...mapActions("item", ["totalCount", "updateCart", "deleteAll"]),
+    quantityUpdate(data, price, statusUpdate) {
+      this.cartUpdate.push(data, price, statusUpdate);
+      return this.updateCart(this.cartUpdate);
+    },
   },
 };
 </script>
