@@ -24,7 +24,7 @@
         <div class="quantity d-flex align-items-center justify-content-end">
           <div
             class="decrease p-3"
-            @click="quantityUpdate(data, data.price, 'minus')"
+            @click="updateCart(data.price, data, 'minus')"
           >
             <i class="ri-subtract-line"></i>
           </div>
@@ -33,7 +33,7 @@
           </div>
           <div
             class="increase p-3"
-            @click="quantityUpdate(data, data.price, 'plus')"
+            @click="updateCart(data.price, data, 'plus')"
           >
             <i class="ri-add-line"></i>
           </div>
@@ -91,10 +91,10 @@ export default {
 
   methods: {
     ...mapActions("item", ["totalCount", "updateCart", "deleteAll"]),
-    quantityUpdate(data, price, statusUpdate) {
-      this.cartUpdate.push(data, price, statusUpdate);
-      return this.updateCart(this.cartUpdate);
-    },
+    // quantityUpdate(data, price, statusUpdate) {
+    //   this.cartUpdate.push(data, price, statusUpdate);
+    //   this.updateCart(this.cartUpdate);
+    // },
   },
 };
 </script>

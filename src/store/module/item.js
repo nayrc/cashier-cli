@@ -60,6 +60,7 @@ export default {
       img: null,
       count: 1,
     },
+    cartCount: {},
   },
   getters: {
     getField,
@@ -68,6 +69,25 @@ export default {
     updateField,
     SET_PRICE_DATA(state, data) {
       state.priceArr.push(data);
+    },
+    SET_SUBTOTAL_AND_TOTAL(state, data) {
+      state.subsTotal += data;
+      state.total = state.subsTotal + state.tax;
+    },
+    CLEAR_QUEUE(state) {
+      state.queue = {
+        id: null,
+        nama: null,
+        price: null,
+        img: null,
+        count: 1,
+      };
+    },
+    CLEAR_CART(state) {
+      state.cart = [];
+      state.priceArr = [];
+      state.subsTotal = 0;
+      state.total = 0;
     },
   },
 
@@ -85,8 +105,7 @@ export default {
           .reduce((acc, curr) => {
             return acc + curr;
           });
-        state.subsTotal += pertam;
-        state.total = state.subsTotal + state.tax;
+        commit("SET_SUBTOTAL_AND_TOTAL", pertam);
       } else if (state.priceArr.length == 1) {
         state.priceArr.forEach((e) => {
           state.subsTotal = e;
@@ -98,56 +117,45 @@ export default {
       }
     },
 
-    updateCart({ state, dispatch }, datas) {
-      for (let i = 0; i < state.cart.length; i++) {
-        if (state.cart[i].id === datas.id) {
-          if (datas.updateType === "minus") {
-            if (state.cart[i].count > 1) {
-              state.cart[i].count--;
-              state.subsTotal -= datas.price;
-              state.total = state.subsTotal + state.tax;
-            } else {
-              alert("Minimal satu");
-              state.count = 1;
-            }
-          } else {
-            if (state.subsTotal === 0) {
-              dispatch("totalCount");
-            } else {
-              state.cart[i].count++;
-              // state.subsTotal += price;
-              // state.total = state.subsTotal + state.tax;
-              console.log(datas.price);
-            }
-          }
-          break;
-        }
-      }
+    updateCart({ state }, { price, data, statusUpdate }) {
+      // for (let i = 0; i < state.cart.length; i++) {
+      //   if (state.cart[i].id === data.id) {
+      //     if (statusUpdate === "minus") {
+      //       if (state.cart[i].count > 1) {
+      //         state.cart[i].count--;
+      //         state.subsTotal -= price;
+      //         state.total = state.subsTotal + state.tax;
+      //       } else {
+      //         alert("Minimal satu");
+      //         state.count = 1;
+      //       }
+      //     } else {
+      //       if (state.subsTotal === 0) {
+      //         dispatch("totalCount");
+      //       } else {
+      //         state.cart[i].count++;
+      //         // state.subsTotal += price;
+      //         // state.total = state.subsTotal + state.tax;
+      //         console.log(price);
+      //       }
+      //     }
+      //     break;
+      //   }
+      // }
+      console.log(state.subsTotal, data, price, statusUpdate);
     },
 
-    deleteAll({ state }) {
-      state.cart = [];
-      state.priceArr = [];
-      state.subsTotal = 0;
-      state.total = 0;
-      for (let x = 0; x < state.fruit.length; x++) {
-        console.log(x);
-      }
+    deleteAll({ commit }) {
+      commit("CLEAR_CART");
     },
     imgChange({ state }, e) {
       state.queue.img = e.target.files[0].name;
     },
 
-    addItems({ state, dispatch }) {
+    addItems({ state, dispatch, commit }) {
       if (state.queue.nama !== null && state.queue.price !== null) {
         state.fruit.push(state.queue);
-        state.queue = {
-          id: null,
-          nama: null,
-          price: null,
-          img: null,
-          count: 1,
-        };
+        commit("CLEAR_QUEUE");
         dispatch("fetchData");
         console.log(state.fruit);
       } else {
