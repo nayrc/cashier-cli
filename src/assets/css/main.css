@@ -236,6 +236,9 @@ button {
   background: rgba(67, 97, 238, 0.15);
   border-radius: 50%;
   margin: 0 1rem;
+  border-radius: 999px !important;
+  width: 45px !important;
+  height: 45px !important;
 }
 .cart .item-list .quantity i {
   font-size: 1.75rem;

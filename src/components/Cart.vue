@@ -23,17 +23,24 @@
         </div>
         <div class="quantity d-flex align-items-center justify-content-end">
           <div
-            class="decrease p-3"
-            @click="updateCart(data.price, data, 'minus')"
+            class="decrease d-flex justify-content-center align-items-center"
+            @click="quantityUpdate(data.price, data, 'minus')"
           >
             <i class="ri-subtract-line"></i>
           </div>
-          <div class="number-quantity">
+          <div
+            class="
+              number-quantity
+              d-flex
+              justify-content-center
+              align-items-center
+            "
+          >
             <p>{{ data.count }}Kg</p>
           </div>
           <div
-            class="increase p-3"
-            @click="updateCart(data.price, data, 'plus')"
+            class="increase d-flex justify-content-center align-items-center"
+            @click="quantityUpdate(data.price, data, 'plus')"
           >
             <i class="ri-add-line"></i>
           </div>
@@ -86,15 +93,26 @@ export default {
     };
   },
   computed: {
-    ...mapFields("item", ["cart", "subsTotal", "tax", "total", "priceArr"]),
+    ...mapFields("item", [
+      "cart",
+      "subsTotal",
+      "tax",
+      "total",
+      "priceArr",
+      "priceCart",
+      "dataCart",
+      "statusUpdate",
+    ]),
   },
 
   methods: {
     ...mapActions("item", ["totalCount", "updateCart", "deleteAll"]),
-    // quantityUpdate(data, price, statusUpdate) {
-    //   this.cartUpdate.push(data, price, statusUpdate);
-    //   this.updateCart(this.cartUpdate);
-    // },
+    quantityUpdate(price, data, statusUpdate) {
+      this.priceCart = price;
+      this.dataCart = data;
+      this.statusUpdate = statusUpdate;
+      this.updateCart();
+    },
   },
 };
 </script>

@@ -53,6 +53,7 @@ export default {
     total: 0,
     priceArr: [],
     totalItem: [],
+    // Add Product
     queue: {
       id: null,
       nama: null,
@@ -60,7 +61,10 @@ export default {
       img: null,
       count: 1,
     },
-    cartCount: {},
+    // Cart Quantity
+    priceCart: null,
+    dataCart: null,
+    statusUpdate: null,
   },
   getters: {
     getField,
@@ -117,32 +121,31 @@ export default {
       }
     },
 
-    updateCart({ state }, { price, data, statusUpdate }) {
-      // for (let i = 0; i < state.cart.length; i++) {
-      //   if (state.cart[i].id === data.id) {
-      //     if (statusUpdate === "minus") {
-      //       if (state.cart[i].count > 1) {
-      //         state.cart[i].count--;
-      //         state.subsTotal -= price;
-      //         state.total = state.subsTotal + state.tax;
-      //       } else {
-      //         alert("Minimal satu");
-      //         state.count = 1;
-      //       }
-      //     } else {
-      //       if (state.subsTotal === 0) {
-      //         dispatch("totalCount");
-      //       } else {
-      //         state.cart[i].count++;
-      //         // state.subsTotal += price;
-      //         // state.total = state.subsTotal + state.tax;
-      //         console.log(price);
-      //       }
-      //     }
-      //     break;
-      //   }
-      // }
-      console.log(state.subsTotal, data, price, statusUpdate);
+    updateCart({ state, dispatch }) {
+      for (let i = 0; i < state.cart.length; i++) {
+        if (state.cart[i].id === state.dataCart.id) {
+          if (state.statusUpdate === "minus") {
+            if (state.cart[i].count > 1) {
+              state.cart[i].count--;
+              state.subsTotal -= state.priceCart;
+              state.total = state.subsTotal + state.tax;
+            } else {
+              alert("Minimal satu");
+              state.count = 1;
+            }
+          } else {
+            if (state.subsTotal === 0) {
+              dispatch("totalCount");
+            } else {
+              state.cart[i].count++;
+              state.subsTotal += state.priceCart;
+              state.total = state.subsTotal + state.tax;
+            }
+          }
+          break;
+        }
+      }
+      // console.log(state.priceCart, state.statusUpdate, state.dataCart);
     },
 
     deleteAll({ commit }) {

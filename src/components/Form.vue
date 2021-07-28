@@ -11,11 +11,7 @@
         </div>
         <div class="form-group my-3">
           <label for="nama">Price</label>
-          <input
-            type="number"
-            class="form-control my-2"
-            v-model="queue.price"
-          />
+          <input type="number" class="form-control my-2" v-model="valuePrice" />
         </div>
         <div class="form-group my-3">
           <label for="nama">Fruit Image</label>
@@ -46,12 +42,24 @@ import { mapActions } from "vuex";
 export default {
   name: "Form",
 
+  data() {
+    return {
+      valuePrice: 0,
+    };
+  },
+
   computed: {
     ...mapFields("item", ["queue"]),
   },
 
   created() {
     this.fetchData();
+  },
+
+  watch: {
+    valuePrice: function (newValue) {
+      this.queue.price = parseInt(newValue);
+    },
   },
 
   methods: {
